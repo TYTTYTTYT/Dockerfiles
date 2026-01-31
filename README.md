@@ -42,16 +42,16 @@ For more details, see the [official Docker documentation](https://docs.docker.co
 
 ### pytorch-base
 
-#### Build
+#### 1. Build the image
 
 ```bash
 cd pytorch-base
-docker build -t tyttyttyt/pytorch-base:latest .
+sudo docker build -t tyttyttyt/pytorch-base:latest .
 ```
 
-#### Push to Docker Hub
+#### 2. Push to Docker Hub
 
 ```bash
-docker login
-docker push tyttyttyt/pytorch-base:latest
+sudo docker login
+sudo docker push tyttyttyt/pytorch-base:latest
 ```
