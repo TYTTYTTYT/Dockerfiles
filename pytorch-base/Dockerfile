@@ -23,6 +23,10 @@ RUN apt install traceroute -y
 RUN apt install net-tools -y
 RUN apt install plocate -y
 RUN apt install git -y
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
+    apt-get install git-lfs -y && \
+    git lfs install --system && \
+    rm -rf /var/lib/apt/lists/*
 # 1. Install certificates (ESSENTIAL for rclone to talk to cloud services)
 RUN apt-get update && apt-get install -y ca-certificates fuse3 && rm -rf /var/lib/apt/lists/*
 # 2. Copy rclone binary from the official image
