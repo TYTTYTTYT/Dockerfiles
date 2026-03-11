@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:2.9.1-cuda12.8-cudnn9-devel
+FROM pytorch/pytorch:2.10.0-cuda13.0-cudnn9-devel
 WORKDIR /workspace
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update
@@ -33,4 +33,5 @@ RUN apt-get update && apt-get install -y ca-certificates fuse3 && rm -rf /var/li
 COPY --from=rclone/rclone:latest /usr/local/bin/rclone /usr/local/bin/rclone
 # 3. Verify installation
 RUN rclone version
-CMD ["/bin/bash"]
+RUN cp /root/.bashrc /etc/skel/.bashrc 2>/dev/null; ln -sf /workspace/.bashrc /root/.bashrc
+CMD cp -n /etc/skel/.bashrc /workspace/.bashrc 2>/dev/null; /bin/bash
