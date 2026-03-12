@@ -5,7 +5,7 @@ RUN apt update
 RUN apt install htop -y
 RUN apt install screen -y
 RUN apt install wget -y
-RUN apt install tar -y 
+RUN apt install tar -y
 RUN apt install zip  -y
 RUN apt install unzip  -y
 RUN apt install libpng-dev libjpeg-dev libopenexr-dev libtiff-dev libwebp-dev -y
@@ -33,5 +33,8 @@ RUN apt-get update && apt-get install -y ca-certificates fuse3 && rm -rf /var/li
 COPY --from=rclone/rclone:latest /usr/local/bin/rclone /usr/local/bin/rclone
 # 3. Verify installation
 RUN rclone version
+# Install Noto fonts for multilingual text rendering (Bengali, Tibetan, CJK, etc.)
+RUN apt-get update && apt-get install -y fonts-noto-core fonts-noto-cjk fonts-noto-extra && \
+    fc-cache -f -v && rm -rf /var/lib/apt/lists/*
 RUN cp /root/.bashrc /etc/skel/.bashrc 2>/dev/null; ln -sf /workspace/.bashrc /root/.bashrc
 CMD cp -n /etc/skel/.bashrc /workspace/.bashrc 2>/dev/null; /bin/bash
