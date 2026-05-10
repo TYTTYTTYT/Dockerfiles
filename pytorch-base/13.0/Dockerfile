@@ -42,5 +42,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     make \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+# Generate all UTF-8 locales so SSH-forwarded LANG values (e.g. en_US.UTF-8) resolve correctly
+RUN apt-get update && apt-get install -y locales && \
+    sed -i 's/^# *\(.*\.UTF-8\)/\1/' /etc/locale.gen && \
+    locale-gen && \
+    rm -rf /var/lib/apt/lists/*
+ENV LANG=en_US.UTF-8
 RUN cp /root/.bashrc /etc/skel/.bashrc 2>/dev/null; ln -sf /workspace/.bashrc /root/.bashrc
 CMD cp -n /etc/skel/.bashrc /workspace/.bashrc 2>/dev/null; /bin/bash
