@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:2.11.0-cuda13.0-cudnn9-devel
+FROM pytorch/pytorch:2.14.0-cuda13.0-cudnn9-devel
 WORKDIR /workspace
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update
@@ -23,6 +23,15 @@ RUN apt install traceroute -y
 RUN apt install net-tools -y
 RUN apt install plocate -y
 RUN apt install git -y
+# Common CLI / dev / paper-figure utilities
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    tmux rsync jq tree ncdu lsof strace file bc \
+    ripgrep fd-find \
+    iotop nvtop \
+    pigz p7zip-full \
+    build-essential cmake pkg-config \
+    graphviz imagemagick poppler-utils inkscape \
+    && rm -rf /var/lib/apt/lists/*
 RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
     apt-get install git-lfs -y && \
     git lfs install --system && \
